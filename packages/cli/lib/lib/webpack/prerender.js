@@ -3,6 +3,7 @@ const { resolve } = require('path');
 const { readFileSync } = require('fs');
 const stackTrace = require('stack-trace');
 const { SourceMapConsumer } = require('source-map');
+const SsrState = require('./ssr-state');
 
 module.exports = function(env, params) {
 	params = params || {};
@@ -31,7 +32,11 @@ module.exports = function(env, params) {
 			`${cwd}/node_modules/preact-render-to-string`
 		));
 
-		return renderToString(preact.h(app, { ...params, url }));
+		const renderState = new SsrState();
+		const App = preact.h(app, { ...params, url, renderState });
+		renderState.body = renderToString(App);
+		
+		return renderState.state;
 	} catch (err) {
 		let stack = stackTrace.parse(err).filter(s => s.getFileName() === entry)[0];
 		if (!stack) {

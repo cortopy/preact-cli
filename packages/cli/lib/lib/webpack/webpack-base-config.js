@@ -65,7 +65,7 @@ module.exports = function(env) {
 	env.manifest = readJson(source('manifest.json')) || {};
 	env.pkg = readJson(resolve(cwd, 'package.json')) || {};
 
-	let babelrc = readJson(resolve(cwd, 'old')) || {};
+	let babelrc = readJson(resolve(cwd, '.babelrc')) || {};
 
 	// use browserslist config environment, config default, or default browsers
 	// default browsers are > 0.25% global market share or Internet Explorer >= 9

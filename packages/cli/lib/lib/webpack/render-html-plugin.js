@@ -10,7 +10,7 @@ let template = resolve(__dirname, '../../resources/template.html');
 
 module.exports = async function(config) {
 	const { cwd, dest, isProd, src } = config;
-	const inProjectTemplatePath = resolve(src, 'template.html');
+	const inProjectTemplatePath = resolve(src, 'template.ejs');
 	if (existsSync(inProjectTemplatePath)) {
 		template = inProjectTemplatePath;
 	}
